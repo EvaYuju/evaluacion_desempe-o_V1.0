@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('nif', 9);
+            $table->string('sex');
+            $table->foreignId('center_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
+    
     }
 
     /**

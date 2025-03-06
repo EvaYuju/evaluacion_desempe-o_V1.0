@@ -13,8 +13,12 @@ return new class extends Migration
     {
         Schema::create('scales', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->integer('value');
+            $table->integer('points');
             $table->timestamps();
         });
+    
     }
 
     /**
