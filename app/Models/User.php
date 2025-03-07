@@ -1,48 +1,30 @@
 <?php
-
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['name', 'email', 'nif', 'sex', 'center_id', 'created_at', 'updated_at'];
+        //'password',          // Agregado para asignación masiva
+        //'email_verified_at', // Agregado si necesitas almacenar esta información
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
+         // Campos que se ocultan en las respuestas JSON o arrays.
+    
+         /*protected $hidden = [
         'password',
         'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+         ];*/
+    public function center()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->belongsTo(Center::class);
+    }
+
+    public function surveys()
+    {
+        return $this->belongsToMany(Survey::class, 'survey_users');
     }
 }
