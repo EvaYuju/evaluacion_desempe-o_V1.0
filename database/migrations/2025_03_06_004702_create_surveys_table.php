@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('surveys', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->longText('description');
+            // Relación para indicar quién crea la encuesta:
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            // Relación para indicar quién responde la encuesta:
+            //$table->foreignId('user_survey_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+
         });
     
     }
