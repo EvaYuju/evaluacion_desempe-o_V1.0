@@ -23,7 +23,7 @@ class CenterController extends Controller
      */
     public function create()
     {
-        //
+        return view('centers.create');
     }
 
     /**
@@ -32,37 +32,45 @@ class CenterController extends Controller
     public function store(Request $request)
     {
         //
+        Center::create($request->all());
+        return redirect()->route('centers.index');
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Center $center)
     {
-        //
+        return view('centers.show', compact('center'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Center $center)
     {
-        //
+        return view('centers.edit', compact('center'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Center $center)
     {
-        //
+        $center->update($request->all());
+        return redirect()->route('centers.index');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Center $center)
     {
         //
+        $center->delete();
+        return redirect()->route('centers.index');
+
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Survey;
 class SurveyController extends Controller
 {
     /**
@@ -11,54 +11,41 @@ class SurveyController extends Controller
      */
     public function index()
     {
-        //
+        $surveys = Survey::all();
+        return view('surveys.index', compact('surveys'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('surveys.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Survey::create($request->all());
+        return redirect()->route('surveys.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Survey $survey)
     {
-        //
+        return view('surveys.show', compact('survey'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Survey $survey)
     {
-        //
+        return view('surveys.edit', compact('survey'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Survey $survey)
     {
-        //
+        $survey->update($request->all());
+        return redirect()->route('surveys.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Survey $survey)
     {
-        //
+        $survey->delete();
+        return redirect()->route('surveys.index');
     }
+
 }

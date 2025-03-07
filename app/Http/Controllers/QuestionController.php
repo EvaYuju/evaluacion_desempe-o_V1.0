@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Question;
+use App\Models\Survey;
+use App\Models\Category;
+use App\Models\Scale;
 
 class QuestionController extends Controller
 {
@@ -11,54 +15,47 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        $questions = Question::with('survey', 'category', 'scale')->get();
+        return view('questions.index', compact('questions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $surveys = Survey::all();
+        $categories = Category::all();
+        $scales = Scale::all();
+        return view('questions.create', compact('surveys', 'categories', 'scales'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Question::create($request->all());
+        return redirect()->route('questions.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Question $question)
     {
-        //
+        return view('questions.show', compact('question'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Question $question)
     {
-        //
+        $surveys = Survey::all();
+        $categories = Category::all();
+        $scales = Scale::all();
+        return view('questions.edit', compact('question', 'surveys', 'categories', 'scales'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Question $question)
     {
-        //
+        $question->update($request->all());
+        return redirect()->route('questions.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Question $question)
     {
-        //
+        $question->delete();
+        return redirect()->route('questions.index');
     }
+
 }

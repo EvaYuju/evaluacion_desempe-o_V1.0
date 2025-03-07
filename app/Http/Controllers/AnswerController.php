@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Answer;
+use App\Models\Question;
 
 class AnswerController extends Controller
 {
@@ -11,54 +13,43 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        //
+        $answers = Answer::with('question')->get();
+        return view('answers.index', compact('answers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $questions = Question::all();
+        return view('answers.create', compact('questions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        Answer::create($request->all());
+        return redirect()->route('answers.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show(Answer $answer)
     {
-        //
+        return view('answers.show', compact('answer'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function edit(Answer $answer)
     {
-        //
+        $questions = Question::all();
+        return view('answers.edit', compact('answer', 'questions'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Answer $answer)
     {
-        //
+        $answer->update($request->all());
+        return redirect()->route('answers.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy(Answer $answer)
     {
-        //
+        $answer->delete();
+        return redirect()->route('answers.index');
     }
+
 }
