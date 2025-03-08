@@ -8,7 +8,7 @@ class User extends Authenticatable
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'nif', 'sex', 'center_id', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'email', 'nif', 'sex', 'center_id', 'role', 'created_at', 'updated_at'];
         //'password',          // Agregado para asignación masiva
         //'email_verified_at', // Agregado si necesitas almacenar esta información
 

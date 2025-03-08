@@ -25,6 +25,13 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            // Otras validaciones...
+            'role'  => 'required|string|in:super_admin,admin,user',
+        ]);
+    
         User::create($request->all());
         return redirect()->route('users.index');
     }
