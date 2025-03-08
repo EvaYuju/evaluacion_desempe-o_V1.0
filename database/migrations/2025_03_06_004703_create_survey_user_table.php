@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('survey_user', function (Blueprint $table) {
+        Schema::create('survey_users', function (Blueprint $table) {
             $table->id();
+            // Relación para indicar quién crea la encuesta:
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            // Relación para indicar la encuesta a la que se asocia:
             $table->foreignId('survey_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
