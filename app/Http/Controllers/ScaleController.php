@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Scale;
 use Illuminate\Http\Request;
 
 class ScaleController extends Controller
@@ -11,7 +12,8 @@ class ScaleController extends Controller
      */
     public function index()
     {
-        //
+        $scales = Scale::with('questions')->get(); // Obtenemos las escalas con sus preguntas relacionadas
+        return view('scales.index', compact('scales'));
     }
 
     /**
@@ -19,7 +21,7 @@ class ScaleController extends Controller
      */
     public function create()
     {
-        //
+        return view('scales.create');
     }
 
     /**
@@ -27,7 +29,13 @@ class ScaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'value' => 'required|integer',
+            'points' => 'required|integer',
+        ]);
+        Scale::create($validated);
+        return redirect()->route('scales.index');
     }
 
     /**
@@ -35,7 +43,8 @@ class ScaleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $scale = Scale::with('questions')->findOrFail($id); // Obtenemos la escala con las preguntas
+        return view('scales.show', compact('scale'));
     }
 
     /**
@@ -43,7 +52,8 @@ class ScaleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $scale = Scale::findOrFail($id);
+        return view('scales.edit', compact('scale'));
     }
 
     /**
@@ -51,7 +61,14 @@ class ScaleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'value' => 'required|integer',
+            'points' => 'required|integer',
+        ]);
+        $scale = Scale::findOrFail($id);
+        $scale->update($validated);
+        return redirect()->route('scales.index');
     }
 
     /**
@@ -59,6 +76,8 @@ class ScaleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $scale = Scale::findOrFail($id);
+        $scale->delete();
+        return redirect()->route('scales.index');
     }
 }
