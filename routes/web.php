@@ -9,6 +9,7 @@ use App\Http\Controllers\ScaleController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,4 +22,6 @@ Route::resource('scales', ScaleController::class);
 Route::resource('questions', QuestionController::class);
 Route::resource('answers', AnswerController::class);
 Route::resource('options', OptionController::class);
+Route::resource('categories', CategoryController::class);
+
 
