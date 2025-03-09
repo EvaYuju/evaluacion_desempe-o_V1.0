@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SurveyUser;
 use Illuminate\Http\Request;
 
 class SurveyUserController extends Controller
@@ -11,7 +12,8 @@ class SurveyUserController extends Controller
      */
     public function index()
     {
-        //
+        $surveyUsers = SurveyUser::with(['user', 'survey'])->get(); // Obtenemos los usuarios con sus encuestas relacionadas
+        return view('survey_users.index', compact('surveyUsers'));
     }
 
     /**
@@ -19,7 +21,7 @@ class SurveyUserController extends Controller
      */
     public function create()
     {
-        //
+        return view('survey_users.create');
     }
 
     /**
@@ -27,7 +29,12 @@ class SurveyUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'survey_id' => 'required|exists:surveys,id',
+        ]);
+        SurveyUser::create($validated);
+        return redirect()->route('survey_users.index');
     }
 
     /**
@@ -35,7 +42,8 @@ class SurveyUserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $surveyUser = SurveyUser::with(['user', 'survey'])->findOrFail($id);
+        return view('survey_users.show', compact('surveyUser'));
     }
 
     /**
@@ -43,7 +51,8 @@ class SurveyUserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $surveyUser = SurveyUser::findOrFail($id);
+        return view('survey_users.edit', compact('surveyUser'));
     }
 
     /**
@@ -51,7 +60,13 @@ class SurveyUserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'survey_id' => 'required|exists:surveys,id',
+        ]);
+        $surveyUser = SurveyUser::findOrFail($id);
+        $surveyUser->update($validated);
+        return redirect()->route('survey_users.index');
     }
 
     /**
@@ -59,6 +74,8 @@ class SurveyUserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $surveyUser = SurveyUser::findOrFail($id);
+        $surveyUser->delete();
+        return redirect()->route('survey_users.index');
     }
 }
