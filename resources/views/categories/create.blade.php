@@ -1,11 +1,11 @@
  
 @extends('layouts.app')
 
-@section('title', 'Crear Encuesta')
+@section('title', 'Crear Categoría')
 
 @section('content')
-    <h1>Crear Encuesta</h1>
-    <form action="{{ route('surveys.store') }}" method="POST">
+    <h1>Crear Categoría</h1>
+    <form action="{{ route('categories.store') }}" method="POST">
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
@@ -13,7 +13,7 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Descripción</label>
-            <textarea class="form-control" name="description"></textarea>
+            <textarea class="form-control" name="description" rows="4" required></textarea>
         </div>
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
