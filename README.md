@@ -13,7 +13,6 @@ Este proyecto es una herramienta de evaluación del desempeño diseñada para ge
 ## Instalación
 Sigue estos pasos para instalar el proyecto en tu entorno local:
 
-```bash
 # Clonar el repositorio
 git clone https://github.com/tu-usuario/evaluacion-desempeno.git
 cd evaluacion-desempeno
