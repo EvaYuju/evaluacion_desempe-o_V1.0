@@ -1,96 +1,51 @@
-# 📊 Evaluación de Desempeño - Laravel
+# Evaluación del Desempeño con Laravel, Livewire y TailwindCSS
 
 ## Descripción
-Este es un sistema de evaluación del desempeño basado en **Laravel**, diseñado para gestionar usuarios, encuestas y respuestas. Cuenta con tres tipos de roles:
-- **Super Admin**: Puede administrar todo el sistema.
-- **Admin**: Gestiona encuestas y usuarios.
-- **Usuario**: Responde encuestas y visualiza resultados.
+Este proyecto es una herramienta de evaluación del desempeño diseñada para gestionar competencias y realizar evaluaciones a empleados. Se ha desarrollado utilizando Laravel en el backend y Blade en el frontend.
 
-## Tecnologías Utilizadas
-- **Laravel** (Backend y lógica de negocio)
-- **Blade + Bootstrap** (Frontend)
-- **Livewire** (Interactividad)
-- **MySQL/MariaDB** (Base de datos)
-- **PHP 8+**
+## Tecnologías preferidas
+- **Laravel** (Framework PHP para backend)
+- **Livewire** (Interactividad sin necesidad de JavaScript)
+- **TailwindCSS** (Estilos modernos y personalizables)
+- **MySQL** (Base de datos relacional)
+- **Laravel PDF** (Generación de informes en PDF)
 
 ## Instalación
-### 1. Clonar el Repositorio
+Sigue estos pasos para instalar el proyecto en tu entorno local:
+
 ```bash
-git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
-cd TU_REPOSITORIO
-```
-### 2. Configurar el Entorno
-```bash
-cp .env.example .env
-```
-Edita `.env` y configura la base de datos:
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=evaluacion_desempeno
-DB_USERNAME=root
-DB_PASSWORD=
-```
-### 3. Instalar Dependencias
-```bash
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/evaluacion-desempeno.git
+cd evaluacion-desempeno
+
+# Instalar dependencias
 composer install
 npm install && npm run dev
-```
-### 4. Generar Clave de Aplicación
-```bash
+
+# Configurar la base de datos
+cp .env.example .env
 php artisan key:generate
-```
-### 5. Migrar la Base de Datos y Crear Datos Iniciales
-```bash
+
+# Modificar .env con los datos de conexión a MySQL
 php artisan migrate --seed
-```
-### 6. Iniciar el Servidor Local
-```bash
+
+# Iniciar el servidor
 php artisan serve
-```
-Abre en el navegador: `http://127.0.0.1:8000`
 
-## Estructura del Proyecto
-```
-/resources/views/
-  ├── layouts/        # Plantillas generales
-  ├── users/          # Vistas CRUD de usuarios
-  ├── surveys/        # Vistas CRUD de encuestas
-  ├── questions/      # Vistas CRUD de preguntas
-  ├── answers/        # Vistas CRUD de respuestas
-  ├── options/        # Opciones de respuesta
-```
+## Uso ## EN CONSTRUCCIÓN ###
+1. **Accede al sistema:** Dirígete a `http://localhost:8000`.
+2. **Crea un administrador:** Regístrate como usuario administrador para gestionar las evaluaciones.
+3. **Gestiona competencias y empleados:** Añade competencias, usuarios y asigna evaluaciones.
+4. **Realiza evaluaciones:** Los empleados podrán responder encuestas asignadas.
+5. **Genera informes:** Se pueden descargar reportes en PDF sobre los resultados de las evaluaciones.
 
-## Rutas Principales (web.php)
-```php
-Route::resource('centers', CenterController::class);
-Route::resource('users', UserController::class);
-Route::resource('surveys', SurveyController::class);
-Route::resource('survey_users', SurveyUserController::class);
-Route::resource('scales', ScaleController::class);
-Route::resource('questions', QuestionController::class);
-Route::resource('answers', AnswerController::class);
-Route::resource('options', OptionController::class);
-```
-
-## Roles y Permisos
-| Rol         | Permisos |
-|------------|----------|
-| **Super Admin** | CRUD completo en todas las entidades |
-| **Admin** | CRUD en encuestas y usuarios |
-| **Usuario** | Solo puede responder encuestas |
-
-## Contribuciones
-1. **Fork** el repositorio  
-2. **Clona** tu fork  
-3. Crea una **rama** (`git checkout -b feature-nueva`)  
-4. Realiza cambios y **haz commit** (`git commit -m "Agrega nueva funcionalidad"`)  
-5. **Sube** la rama (`git push origin feature-nueva`)  
-6. Abre un **Pull Request**
-
-## Licencia
-MIT License © 2024 - TuNombre
+## Contribución
+Si deseas contribuir al proyecto:
+1. Realiza un fork del repositorio.
+2. Crea una nueva rama (`git checkout -b feature-nueva`).
+3. Realiza tus cambios y confirma (`git commit -m 'Descripción del cambio'`).
+4. Envía un pull request.
 
 ## Contacto
-Si tienes dudas o sugerencias, contáctame en **[TuCorreo@ejemplo.com](mailto:TuCorreo@ejemplo.com)**
+2025 Eva López
+ 
