@@ -15,7 +15,7 @@ Sigue estos pasos para instalar el proyecto en tu entorno local:
 
 # Clonar el repositorio
 git clone https://github.com/tu-usuario/evaluacion_desempe-o_V1.0.git
-cd evaluacion-desempeno
+cd evaluacion_desempe-o_V1.0
 
 # Instalar dependencias
 composer install
