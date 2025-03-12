@@ -19,7 +19,7 @@ class User extends Authenticatable
         'created_at', 
         'updated_at'
     ];
-        //'password',          // Agregar para asignación masiva
+        
         //'email_verified_at', // Agregar si necesitas almacenar esta información
 
          // Campos que se ocultan en las respuestas JSON o arrays.

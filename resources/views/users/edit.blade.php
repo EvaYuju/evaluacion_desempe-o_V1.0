@@ -18,6 +18,11 @@
     <div class="mb-3">
         <label for="password" class="form-label">Contraseña</label>
         <input type="password" class="form-control" name="password">
+        @if($errors->has('password'))
+        <div class="alert alert-danger mt-1">
+            {{ $errors->first('password') }}
+        </div>
+        @endif
     </div>
     <div class="mb-3">
         <label for="password_confirmation" class="form-label">Confirmar Contraseña</label>

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Center;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -39,8 +40,8 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
-            //'password' => Hash::make($request->password),
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
+            //'password' => bcrypt($request->password),
             'nif' => $request->nif,
             'sex' => $request->sex,
             'center_id' => $request->center_id,
@@ -64,27 +65,46 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:6|confirmed',
-            'nif' => 'required|string|max:9',
-            'sex' => 'required|string',
+        // Reglas básicas para los demás campos
+        $rules = [
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'nif'       => 'required|string|max:9',
+            'sex'       => 'required|string',
             'center_id' => 'required|exists:centers,id',
-            'role' => 'required|in:super_admin,admin,user',
-        ]);
+            'role'      => 'required|in:super_admin,admin,user',
+        ];
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
-            'nif' => $request->nif,
-            'sex' => $request->sex,
-            'center_id' => $request->center_id,
-            'role' => $request->role,
-        ]);
+        // Si se ingresa algo en alguno de los campos de contraseña, se exige que ambos se llenen
+        if ($request->filled('password') || $request->filled('password_confirmation')) {
+            $rules['password'] = 'required|string|min:6|confirmed';
+        }
+        // Mensajes de error personalizados
+        $messages = [
+            'password.confirmed' => 'La contraseña y su confirmación deben coincidir.',
+            'password.min'       => 'La contraseña debe tener al menos 6 caracteres.',
+        ];
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        $request->validate($rules, $messages);
+
+        // Preparamos los datos a actualizar
+        $data = $request->only(['name', 'email', 'nif', 'sex', 'center_id', 'role']);
+
+        // Solo actualizamos la contraseña si se ha ingresado un valor
+        if ($request->filled('password')) {
+            $hashedPassword = Hash::make($request->password);
+            Log::info('Contraseña hasheada: ' . $hashedPassword);
+            $data['password'] = $hashedPassword;
+        }
+
+        // DEBUG: Ver qué datos está enviando Laravel a la BD
+        //dd($data);
+
+        Log::info('Datos antes de la actualización:', $user->toArray());
+        $user->update($data);
+        Log::info('Datos actualizados para el usuario ID: ' . $user->id);
+
+        return redirect()->route('users.index')->with('success', 'Usuario actualizado exitosamente.');
     }
 
     public function destroy(User $user)
