@@ -1,11 +1,8 @@
- 
 @extends('layouts.app')
-
-@section('title', 'Centros')
-
+@section('title', 'Lista de Centros')
 @section('content')
     <h1>Lista de Centros</h1>
-    <a href="{{ route('centers.create') }}" class="btn btn-primary">Agregar Centro</a>
+    <a href="{{ route('centers.create') }}" class="btn btn-primary">Crear Nuevo Centro</a>
     <table class="table mt-3">
         <thead>
             <tr>
@@ -22,11 +19,12 @@
                     <td>{{ $center->denomination }}</td>
                     <td>{{ $center->province }}</td>
                     <td>
-                        <a href="{{ route('centers.edit', $center->id) }}" class="btn btn-warning">Editar</a>
-                        <form action="{{ route('centers.destroy', $center->id) }}" method="POST" style="display:inline;">
+                        <a href="{{ route('centers.show', $center) }}" class="btn btn-info btn-sm">Ver</a>
+                        <a href="{{ route('centers.edit', $center) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="{{ route('centers.destroy', $center) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar este centro?')">Eliminar</button>
                         </form>
                     </td>
                 </tr>

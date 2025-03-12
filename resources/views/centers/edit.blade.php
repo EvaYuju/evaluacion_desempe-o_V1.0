@@ -1,8 +1,5 @@
- 
 @extends('layouts.app')
-
 @section('title', 'Editar Centro')
-
 @section('content')
     <h1>Editar Centro</h1>
     <form action="{{ route('centers.update', $center->id) }}" method="POST">
