@@ -74,4 +74,12 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index');
     }
+    // En el controlador de categorías
+    public function getQuestionsByCategory($categoryId)
+    {
+        $category = Category::findOrFail($categoryId);
+        $questions = $category->questions; // Suponiendo que la relación está bien definida
+
+        return response()->json(['questions' => $questions]);
+    }
 }

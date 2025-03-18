@@ -23,9 +23,28 @@ class AnswerController extends Controller
         return view('answers.create', compact('questions'));
     }
 
+
     public function store(Request $request)
     {
-        Answer::create($request->all());
+        // Validación de respuesta
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'question_id' => 'required|exists:questions,id',
+            'response' => 'nullable|string', // Solo si la respuesta es libre
+            'option_id' => 'nullable|exists:options,id', // Solo si es opción múltiple
+        ]);
+
+        // Si la respuesta es de opción múltiple, guarda la opción seleccionada
+        $answerData = [
+            'user_id' => $request->user_id,
+            'question_id' => $request->question_id,
+            'response' => $request->response ?: null, // Si no es opción, usar respuesta libre
+            'option_id' => $request->option_id ?: null, // Guardar la opción seleccionada si es de opción múltiple
+        ];
+
+        // Crear la respuesta
+        Answer::create($answerData);
+
         return redirect()->route('answers.index');
     }
 
@@ -51,5 +70,4 @@ class AnswerController extends Controller
         $answer->delete();
         return redirect()->route('answers.index');
     }
-
 }

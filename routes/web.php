@@ -24,4 +24,9 @@ Route::resource('answers', AnswerController::class);
 Route::resource('options', OptionController::class);
 Route::resource('categories', CategoryController::class);
 
+Route::get('/api/category/{categoryId}/questions', [CategoryController::class, 'getQuestionsByCategory']);
+Route::get('/api/survey/{surveyId}/questions', [SurveyController::class, 'getQuestionsBySurvey']);
+Route::get('/api/survey/{surveyId}/questions/{questionId}/options', [SurveyController::class, 'getOptionsByQuestion']);
+Route::get('/api/survey/{surveyId}/questions/{questionId}/answers', [SurveyController::class, 'getAnswersByQuestion']);
+
 
