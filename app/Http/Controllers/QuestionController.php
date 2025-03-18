@@ -29,8 +29,24 @@ class QuestionController extends Controller
 
     public function store(Request $request)
     {
-        Question::create($request->all());
-        return redirect()->route('questions.index');
+         // Validar la entrada
+    $validated = $request->validate([
+        'question' => 'required|string|max:255',
+        'survey_id' => 'required|exists:surveys,id',
+        'category_id' => 'required|exists:categories,id',
+        'scale_id' => 'required|exists:scales,id',
+    ]);
+
+     // Crear la nueva pregunta con las relaciones
+     Question::create([
+        'question' => $validated['question'], 
+        'survey_id' => $validated['survey_id'],
+        'category_id' => $validated['category_id'],
+        'scale_id' => $validated['scale_id'],
+
+    ]);
+
+    return redirect()->route('questions.index');
     }
 
     public function show(Question $question)
